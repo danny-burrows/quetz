@@ -160,3 +160,19 @@ def test_configure_logger(capsys):
     assert captured.err.count("second") == 1
     assert "my test" not in captured.err
     assert len(captured.err.splitlines()) == 1
+
+
+def test_config_from_multiple_sources(config_dir, config_base):
+    config_path = os.path.join(config_dir, "config.toml")
+    with open(config_path, "w") as fid:
+        fid.write("[github]\nclient_id='abc'")
+
+    Config._instances = {}
+
+    os.environ["QUETZ_GITHUB_CLIENT_SECRET"] = "abc"
+
+    c = Config(config_path)
+
+    assert c.configured_section("github")
+    assert c.github_client_id == "abc"
+    assert c.github_client_secret == "abc"
