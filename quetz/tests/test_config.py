@@ -165,7 +165,7 @@ def test_configure_logger(capsys):
 def test_config_from_multiple_sources(config_dir, config_base):
     config_path = os.path.join(config_dir, "config.toml")
     with open(config_path, "w") as fid:
-        fid.write("[github]\nclient_id='abc'")
+        fid.write("\n".join([config_base, "[github]\nclient_id='abc'"]))
 
     Config._instances = {}
 
