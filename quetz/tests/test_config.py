@@ -70,13 +70,13 @@ def test_config_is_singleton(config):
     assert c_file is c_new
 
 
-def test_config_with_path(config_dir, config_base):
+def test_config_with_path(config_dir, config_base_with_auth):
     one_path = os.path.join(config_dir, "one_config.toml")
     other_path = os.path.join(config_dir, "other_config.toml")
     with open(one_path, "w") as fid:
-        fid.write("\n".join([config_base, "[users]\nadmins=['one']"]))
+        fid.write("\n".join([config_base_with_auth, "[users]\nadmins=['one']"]))
     with open(other_path, "w") as fid:
-        fid.write("\n".join([config_base, "[users]\nadmins=['other']"]))
+        fid.write("\n".join([config_base_with_auth, "[users]\nadmins=['other']"]))
 
     Config._instances = {}
 
